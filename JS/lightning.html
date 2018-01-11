@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lightning Counter</title>
+    <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <script type="text/babel">
+    
+        var LightningCounter = React.createClass({
+        
+            getInitialState: function(){
+            
+                return {
+                    strikes: 0
+                };
+                
+            },
+            
+            timerTick: function() {
+        
+                this.setState({
+                    strikes: this.state.strikes + 1
+                });
+                
+            },
+            
+            componentDidMount: function(){
+            
+                setInterval(this.timerTick, 10);
+                
+            },
+            
+            render: function() {
+            
+                var counterStyle = {
+                    color: "#66FFFF",
+                    fontSize: 50
+                };
+                
+                var count = this.state.strikes.toLocaleString();
+                
+                return (
+                    <h1 style={counterStyle}>{count}</h1>
+                );
+            }
+        
+        });
+        
+        var LightningCounterDisplay = React.createClass ({
+            
+            render: function() {
+                
+                var commonStyle = {
+                    margin: 0,
+                    padding: 0
+                }
+                
+                var divStyle = {
+                    width: 250,
+                    textAlign: "center",
+                    backgroundColor: "#020202",
+                    padding: 40,
+                    fontFamily: "sans-serif",
+                    color: "#999999",
+                    borderRadius: 10
+                };
+                
+                var textStyles = {
+                    emphasis: {
+                        fontSize: 38,
+                        ...commonStyle
+                    },
+                    smallEmphasis: {
+                        ...commonStyle
+                    },
+                    small: {
+                        fontSize: 17,
+                        opacity: 0.5,
+                        ...commonStyle
+                    }
+                    
+                }
+                
+                return(
+                    <div style={divStyle}>
+                        <LightningCounter />
+                        <h2 style={textStyles.smallEmphasis}>LIGHTING STRIKES</h2>
+                        <h2 style={textStyles.emphasis}>WORLDWIDE</h2>
+                        <p style={textStyles.small}>(since page load)</p>
+                    </div>
+                );
+    
+            }
+            
+        });
+        
+        ReactDOM.render(
+            <LightningCounterDisplay />,
+            document.querySelector("#container")
+        );
+    </script>
+</body>
+</html>
